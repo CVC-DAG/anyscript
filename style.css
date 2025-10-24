@@ -19,7 +19,7 @@
   --color-teal-700: rgba(26, 104, 115, 1);
   --color-teal-800: rgba(41, 150, 161, 1);
   --color-red-400: rgba(255, 84, 89, 1);
-  --color-red-500: rgba(192, 21, 47, 1);
+  --color-red-500: rgb(192, 21, 21);
   --color-orange-400: rgba(230, 129, 97, 1);
   --color-orange-500: rgba(168, 75, 47, 1);
 
@@ -765,7 +765,7 @@ body {
 
 /* Header & Navigation */
 .header {
-    background-color: #ff2a19;
+    background-color: var(--color-red-500);
     color: white;
     position: fixed;
     top: 0;
@@ -826,7 +826,7 @@ main {
 
 /* Hero Section */
 .hero {
-    background-color: #ff2a19;
+    background-color:var(--color-red-500);
     color: white;
     padding: 6rem 0;
     text-align: center;
@@ -892,14 +892,14 @@ h1, h2, h3, h4, h5, h6 {
 
 h2 {
     font-size: 2.2rem;
-    color: #ff2a19;
+    color: var(--color-red-500);
     margin-bottom: 2rem;
     text-align: center;
 }
 
 h3 {
     font-size: 1.5rem;
-    color: #ff2a19;
+    color: var(--color-red-500);
     margin-bottom: 1rem;
 }
 
@@ -926,12 +926,12 @@ p {
 .highlight-item {
     background: #ffffff;
     padding: 2rem;
-    border: 1px solid #ff2a19;
+    border: 1px solid var(--color-red-500);
     text-align: center;
 }
 
 .highlight-item h3 {
-    color: #ff2a19;
+    color: var(--color-red-500);
     margin-bottom: 1rem;
 }
 
@@ -946,12 +946,12 @@ p {
 .track {
     background: #ffffff;
     padding: 2rem;
-    border: 1px solid #ff2a19;
-    border-left: 4px solid #ff2a19;
+    border: 1px solid var(--color-red-500);
+    border-left: 4px solid var(--color-red-500);
 }
 
 .track h3 {
-    color: #ff2a19;
+    color: var(--color-red-500);
     margin-bottom: 1.5rem;
     font-size: 1.4rem;
 }
@@ -964,7 +964,7 @@ p {
 .temporal-reasoning {
     background: #ffffff;
     padding: 2rem;
-    border-left: 4px solid #ff2a19;
+    border-left: 4px solid var(--color-red-500);
     margin-top: 2rem;
 }
 
@@ -979,18 +979,18 @@ p {
 .metric {
     background: #ffffff;
     padding: 2rem;
-    border: 1px solid #ff2a19;
+    border: 1px solid var(--color-red-500);
 }
 
 .metric h3 {
-    color: #ff2a19;
+    color: var(--color-red-500);
     margin-bottom: 1rem;
 }
 
 .formula {
     background: #fff5eb;
     padding: 1rem;
-    border: 1px solid #ff2a19;
+    border: 1px solid var(--color-red-500);
     margin-top: 1rem;
     font-family: 'Courier New', monospace;
     font-size: 0.95rem;
@@ -1027,7 +1027,7 @@ p {
 .csv-format {
     background: #fff5eb;
     padding: 2rem;
-    border: 1px solid #ff2a19;
+    border: 1px solid var(--color-red-500);
     margin-bottom: 2rem;
 }
 
@@ -1049,13 +1049,13 @@ p {
 .format-track {
     background: #ffffff;
     padding: 2rem;
-    border: 1px solid #ff2a19;
+    border: 1px solid var(--color-red-500);
 }
 
 .example {
     background: #fff5eb;
     padding: 1rem;
-    border: 1px solid #ff2a19;
+    border: 1px solid var(--color-red-500);
     margin-top: 1rem;
     font-family: 'Courier New', monospace;
     font-size: 0.95rem;
@@ -1080,7 +1080,7 @@ th, td {
 }
 
 th {
-    background-color: #ff2a19;
+    background-color: var(--color-red-500);
     color: white;
     font-weight: 600;
 }
@@ -1103,7 +1103,7 @@ th {
 }
 
 .btn-download {
-    background-color: #ff2a19;
+    background-color: var(--color-red-500);
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -1140,12 +1140,12 @@ th {
 
 .timeline-date {
     font-weight: 700;
-    color: #ff2a19;
+    color: var(--color-red-500);
     font-size: 1.1rem;
 }
 
 .timeline-content h3 {
-    color: #ff2a19;
+    color: var(--color-red-500);
     margin-bottom: 0.5rem;
 }
 
@@ -1160,16 +1160,16 @@ th {
 .team-member {
     background: #ffffff;
     padding: 2rem;
-    border: 1px solid #ff2a19;
+    border: 1px solid var(--color-red-500);
 }
 
 .member-info h3 {
-    color: #ff2a19;
+    color: var(--color-red-500);
     margin-bottom: 0.5rem;
 }
 
 .role {
-    color: #ff2a19;
+    color: var(--color-red-500);
     font-weight: 600;
     margin-bottom: 0.5rem;
     font-size: 1rem;
@@ -1197,7 +1197,7 @@ th {
 }
 
 .contact-item h3 {
-    color: #ff2a19;
+    color: var(--color-red-500);
     margin-bottom: 1rem;
 }
 
@@ -1209,7 +1209,7 @@ th {
 
 .link-btn {
     display: inline-block;
-    background-color: #ff2a19;
+    background-color: var(--color-red-500);
     color: white;
     padding: 0.75rem 1.5rem;
     text-decoration: none;
@@ -1224,7 +1224,7 @@ th {
 
 /* Footer */
 .footer {
-    background-color: #ff2a19;
+    background-color: var(--color-red-500);
     color: white;
     text-align: center;
     padding: 2rem 0;
@@ -1343,7 +1343,7 @@ th {
 .example-item {
     background: #ffffff;
     padding: 1.5rem;
-    border: 1px solid #ff2a19;
+    border: 1px solid var(--color-red-500);
     text-align: center;
 }
 
@@ -1351,13 +1351,13 @@ th {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border: 1px solid #ff2a19;
+    border: 1px solid var(--color-red-500);
     margin-bottom: 1rem;
 }
 
 .example-caption {
     font-weight: 600;
-    color: #ff2a19;
+    color: var(--color-red-500);
     margin-bottom: 0.5rem;
     font-size: 1.1rem;
 }
@@ -1386,7 +1386,7 @@ code {
     padding: 0.2rem 0.4rem;
     font-family: 'Courier New', monospace;
     font-size: 0.9rem;
-    border: 1px solid #ff2a19;
+    border: 1px solid var(--color-red-500);
 }
 
 em {
@@ -1400,7 +1400,7 @@ strong {
 }
 
 a {
-    color: #ff2a19;
+    color: var(--color-red-500);
     text-decoration: none;
 }
 
