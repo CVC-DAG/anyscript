@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICDAR 2026 Competition on Long-Term Handwriting Author Identification</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Fixed Navigation Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>ICDAR 2026</h1>
+                <span>AnyScript Challenge</span>
+            </div>
+            <nav class="nav">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#task" class="nav-link">Task</a>
+                <a href="#evaluation" class="nav-link">Evaluation</a>
+                <a href="#dataset" class="nav-link">Dataset</a>
+                <a href="#examples" class="nav-link">Examples</a>
+                <a href="#download" class="nav-link">Download</a>
+                <a href="#schedule" class="nav-link">Schedule</a>
+                <a href="#team" class="nav-link">Team</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner Header -->
+    <div class="banner-header">
+        <div class="banner-overlay">
+            <br>
+            <h1 class="banner-title">Long-Term Handwriting Author Identification Challenge</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="section hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">ICDAR 2026 Competition on Long-Term Handwriting Author Identification</h1>
+                    <h2 class="hero-subtitle">The AnyScript Challenge</h2>
+                    <p class="hero-description">
+                        The first benchmark to evaluate writer identification systems across manuscripts separated by decades, 
+                        incorporating the temporal dimension of handwriting evolution.
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <span class="stat-number">1,019</span>
+                            <span class="stat-label">Authors</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">2,286</span>
+                            <span class="stat-label">Books</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">527,340</span>
+                            <span class="stat-label">Pages</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">300+</span>
+                            <span class="stat-label">Years</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Introduction -->
+        <section class="section">
+            <div class="container">
+                <h2>Introduction &amp; Motivation</h2>
+                <p>
+                    Traditional writer identification frameworks treat handwriting style as a static snapshot, 
+                    overlooking the crucial dimension of temporal evolution. Handwriting naturally evolves due to aging, 
+                    context, and changing writing materials, limiting the real-world applicability of current approaches.
+                </p>
+                <p>
+                    The AnyScript competition introduces temporal transitivity to authorship identification, 
+                    challenging systems to identify common authorship across manuscripts separated by decades. 
+                    Our dataset from the Spanish Digital Library (Biblioteca Digital Hispánica) spans 500+ years 
+                    of authentic autograph manuscripts.
+                </p>
+                <div class="highlights">
+                    <div class="highlight-item">
+                        <h3>Temporal Evolution</h3>
+                        <p>Account for progressive changes in writing style over time</p>
+                    </div>
+                    <div class="highlight-item">
+                        <h3>Multi-Page Context</h3>
+                        <p>Process long contextual sequences efficiently</p>
+                    </div>
+                    <div class="highlight-item">
+                        <h3>Historical Significance</h3>
+                        <p>18th-20th century literary and artistic works</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Task Definition -->
+        <section id="task" class="section alt-bg">
+            <div class="container">
+                <h2>Task Definition</h2>
+                <p>
+                    The competition follows a <strong>query-by-example retrieval</strong> framework. 
+                    Given a query document (page or book), systems must retrieve other documents 
+                    written by the same author from the dataset.
+                </p>
+                
+                <div class="task-tracks">
+                    <div class="track">
+                        <h3>Intra-Book Evaluation</h3>
+                        <div class="track-details">
+                            <p><strong>Goal:</strong> Identify which books query pages belong to</p>
+                            <p><strong>Input:</strong> 1,000 individual pages excluded from training books</p>
+                            <p><strong>Output:</strong> Page-level retrieval rankings</p>
+                            <p><strong>Challenge:</strong> Match pages to their source books</p>
+                        </div>
+                    </div>
+                    <div class="track">
+                        <h3>Extra-Book Evaluation</h3>
+                        <div class="track-details">
+                            <p><strong>Goal:</strong> Identify books by the same author across temporal spans</p>
+                            <p><strong>Input:</strong> 200 complete books excluded from training set</p>
+                            <p><strong>Output:</strong> Book-level retrieval rankings</p>
+                            <p><strong>Challenge:</strong> Long-term stylistic continuity across decades</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="temporal-reasoning">
+                    <h3>Temporal Transitivity</h3>
+                    <p>
+                        Systems are expected to incorporate temporal reasoning. Since direct inference 
+                        between temporally distant manuscripts (A ↔ C) is challenging, methods should 
+                        leverage intermediate associations through temporally closer manuscripts (A ↔ B ↔ C).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Evaluation Metrics -->
+        <section id="evaluation" class="section">
+            <div class="container">
+                <h2>Evaluation Metrics</h2>
+                <p>Three complementary metrics evaluate retrieval performance:</p>
+                
+                <div class="metrics">
+                    <div class="metric">
+                        <h3>Recall@K</h3>
+                        <p>Measures the proportion of relevant documents among the top K retrieved items (K = 1, 5, 10).</p>
+                        <div class="formula">
+                            <em>Recall@K = (Number of relevant documents in top K) / (Total number of relevant documents)</em>
+                        </div>
+                    </div>
+                    
+                    <div class="metric">
+                        <h3>Mean Average Precision (mAP)</h3>
+                        <p>Summarizes ranking performance by averaging precision across all queries. Rewards systems that rank relevant items higher.</p>
+                        <div class="formula">
+                            <em>AP(q) = (1/R<sub>q</sub>) Σ P<sub>q</sub>(k) × rel<sub>q</sub>(k)</em><br>
+                            <em>mAP = (1/Q) Σ AP(q)</em>
+                        </div>
+                    </div>
+                    
+                    <div class="metric">
+                        <h3>Normalized Discounted Cumulative Gain (nDCG)</h3>
+                        <p>Uses normalized temporal distance as relevance score to promote historically coherent rankings.</p>
+                        <div class="formula">
+                            <em>DCG<sub>q</sub> = Σ (2<sup>rel<sub>q</sub>(k)</sup> - 1) / log<sub>2</sub>(k + 1)</em><br>
+                            <em>nDCG<sub>q</sub> = DCG<sub>q</sub> / IDCG<sub>q</sub></em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dataset -->
+        <section id="dataset" class="section alt-bg">
+            <div class="container">
+                <h2>The AnyScript Dataset</h2>
+                
+                <div class="dataset-overview">
+                    <div class="dataset-stats">
+                        <h3>Dataset Statistics</h3>
+                        <ul>
+                            <li><strong>500,000+</strong> images (colored + binarized)</li>
+                            <li><strong>2,286 books</strong> by 1,019 unique authors</li>
+                            <li><strong>Temporal span:</strong> 500+ years (18th-20th centuries)</li>
+                            <li><strong>Content:</strong> Novels, plays, music scores, literary works</li>
+                            <li><strong>Language:</strong> Primarily Spanish</li>
+                            <li><strong>Source:</strong> Spanish Digital Library autograph copies</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="dataset-details">
+                        <h3>Data Characteristics</h3>
+                        <p>
+                            The dataset contains verified autograph manuscripts - original works produced by their creators. 
+                            Documents labeled as autographs but dating after authors' deaths have been removed to ensure authenticity.
+                        </p>
+                        <p>
+                            Temporal coverage focuses on the late 19th and early 20th centuries, with some authors 
+                            having continuous book representation spanning 4 decades, enabling study of long-term stylistic evolution.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples" class="section">
+            <div class="container">
+                <h2>Dataset Examples</h2>
+                <p class="text-center">
+                    The AnyScript dataset contains diverse historical documents including personal letters, 
+                    theater scripts, music scores, and literary works spanning over 500 years. 
+                    Below are representative examples of the types of manuscripts included in our collection.
+                </p>
+                
+                <div class="examples-grid">
+                    <div class="example-item">
+                        <img src="./assets/rosalia_de_castro.jpg" 
+                             alt="19th century handwritten letter" class="example-image">
+                        <h4 class="example-caption">Personal letter from 19th century</h4>
+                        <p class="example-description">
+                            Historical handwritten correspondence demonstrating the evolution of 
+                            personal writing styles and formal letter composition.
+                        </p>
+                    </div>
+                    
+                    <div class="example-item">
+                        <img src="./assets/sardana_agramont.png" 
+                             alt="Handwritten music score manuscript" class="example-image">
+                        <h4 class="example-caption">Music score manuscript</h4>
+                        <p class="example-description">
+                            Handwritten musical notation showcasing the unique challenges of 
+                            identifying authorship in specialized symbolic writing systems.
+                        </p>
+                    </div>
+                    
+                    <div class="example-item">
+                        <img src="./assets/jose_zorrilla.jpg" 
+                             alt="Antique handwritten document" class="example-image">
+                        <h4 class="example-caption">Literary work</h4>
+                        <p class="example-description">
+                            Antique handwritten document illustrating the temporal evolution 
+                            of handwriting styles across different literary contexts.
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 3rem; padding: 2rem; background: #ffffff; border: 1px solid #ff2a19;">
+                    <h3 style="text-align: center; color: #ff2a19; margin-bottom: 1rem;">Temporal Challenge</h3>
+                    <p style="text-align: center; font-size: 1.1rem; margin: 0;">
+                        These examples demonstrate the core challenge of our competition: identifying common authorship 
+                        across documents that may span decades, accounting for natural evolution in handwriting style, 
+                        different contexts (personal vs. formal), and varying writing materials.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Submission Format -->
+        <section class="section">
+            <div class="container">
+                <h2>Submission Format</h2>
+                <p>Both evaluation tracks require CSV file submissions with the following structure:</p>
+                
+                <div class="format-details">
+                    <div class="csv-format">
+                        <h3>Required CSV Columns</h3>
+                        <div class="csv-example">
+                            <p style="text-align: center; align-items: center; align-content: center;">query_document_id,retrieved_document_id,similarity_score</p>
+                        </div>
+                    </div>
+                    
+                    <div class="track-formats">
+                        <div class="format-track">
+                            <h4>Intra-Book Track</h4>
+                            <p>Submit page-to-page similarity scores for 1,000 query pages against all training pages.</p>
+                            <div class="example">
+                                <strong>Example:</strong><br>
+                                <code>query_page_001,train_page_1234,0.89</code><br>
+                                <code>query_page_001,train_page_5678,0.76</code>
+                            </div>
+                        </div>
+                        
+                        <div class="format-track">
+                            <h4>Extra-Book Track</h4>
+                            <p>Submit book-to-book similarity scores for 200 query books against all training books.</p>
+                            <div class="example">
+                                <strong>Example:</strong><br>
+                                <code>query_book_001,train_book_045,0.92</code><br>
+                                <code>query_book_001,train_book_128,0.68</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download Section -->
+        <section id="download" class="section alt-bg">
+            <div class="container">
+                <h2>Downloads</h2>
+                <div class="download-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dataset Component</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Training Set</strong></td>
+                                <td>Full-resolution colored images from training books</td>
+                                <td><span class="status coming-soon">Coming Soon</span></td>
+                                <td><button class="btn-download" disabled>Download</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Training Set (Binarized)</strong></td>
+                                <td>Binarized versions of training images</td>
+                                <td><span class="status coming-soon">Coming Soon</span></td>
+                                <td><button class="btn-download" disabled>Download</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Training Labels</strong></td>
+                                <td>Author and date annotations for training data</td>
+                                <td><span class="status coming-soon">Coming Soon</span></td>
+                                <td><button class="btn-download" disabled>Download</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Test Queries</strong></td>
+                                <td>Unlabeled test set for evaluation</td>
+                                <td><span class="status available-march">Available March 2026</span></td>
+                                <td><button class="btn-download" disabled>Download</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule -->
+        <section id="schedule" class="section">
+            <div class="container">
+                <h2>Competition Schedule</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">January 2026</div>
+                        <div class="timeline-content">
+                            <h3>Competition Launch</h3>
+                            <p>Competition website and validation set live</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">March 01, 2026</div>
+                        <div class="timeline-content">
+                            <h3>Test Set Release</h3>
+                            <p>Test set available on evaluation server</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">April 03, 2026</div>
+                        <div class="timeline-content">
+                            <h3>Results Deadline</h3>
+                            <p>Competition results submission deadline</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">April 17, 2026</div>
+                        <div class="timeline-content">
+                            <h3>Report Submission</h3>
+                            <p>Initial competition report submission due</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">May 5, 2026</div>
+                        <div class="timeline-content">
+                            <h3>Camera-Ready Papers</h3>
+                            <p>Camera-ready paper submission due</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">June 22, 2026</div>
+                        <div class="timeline-content">
+                            <h3>Winners Announced</h3>
+                            <p>Competition winners announcement</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Organizing Team -->
+        <section id="team" class="section alt-bg">
+            <div class="container">
+                <h2>Organizing Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-info">
+                            <h3>Adrià Molina Rodríguez</h3>
+                            <p class="role">PhD Candidate</p>
+                            <p class="email">amolina@cvc.uab.cat</p>
+                            <p class="interests">Cultural heritage, data governance, responsible AI, retrieval systems, data visualization, graphs</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-info">
+                            <h3>Carlos Boned Riera</h3>
+                            <p class="role">PhD Student</p>
+                            <p class="email">cboned@cvc.uab.cat</p>
+                            <p class="interests">Representation learning, graph-based methods, historical manuscripts, retrieval systems</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-info">
+                            <h3>Pau Torras</h3>
+                            <p class="role">PhD Student</p>
+                            <p class="email">ptorras@cvc.uab.cat</p>
+                            <p class="interests">Historical handwritten music scores recognition, digital humanities</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-info">
+                            <h3>Oriol Ramos Terrades</h3>
+                            <p class="role">Associate Professor &amp; Department Head</p>
+                            <p class="email">oriolrt@cvc.uab.cat</p>
+                            <p class="interests">Probabilistic graphical models, document image analysis, symbol retrieval</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-info">
+                            <h3>Josep Lladós</h3>
+                            <p class="role">Associate Professor &amp; CVC Director</p>
+                            <p class="email">josep@cvc.uab.cat</p>
+                            <p class="interests">Document analysis, structural pattern recognition, computer vision</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Contact Information</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>Institution</h3>
+                        <p>Computer Vision Center and Universitat Autònoma de Barcelona</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>General Inquiries</h3>
+                        <p>Email: <a href="mailto:amolina@cvc.uab.cat">amolina@cvc.uab.cat</a></p>
+                    </div>
+                    <div class="contact-links">
+                        <a href="https://www.cvc.uab.cat/" target="_blank" class="link-btn">Computer Vision Center</a>
+                        <a href="https://www.uab.cat/" target="_blank" class="link-btn">Universitat Autònoma de Barcelona</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Computer Vision Center, Universitat Autònoma de Barcelona. All rights reserved.</p>
+            <p>ICDAR 2026 Competition on Long-Term Handwriting Author Identification</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
