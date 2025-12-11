@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             if (!this.disabled) {
                 // In a real implementation, this would trigger actual downloads
-                alert('Download would start here. Files are not yet available.');
+                alert('Download should start now. Some files can be big, you can also download it via WGET command on your data server.');
             } else {
                 alert('This dataset component is not yet available. Please check the schedule for release dates.');
             }
