@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICDAR 2026 AnyScript - Submission Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Fixed Navigation Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>ICDAR 2026</h1>
+                <span>AnyScript Challenge</span>
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link">Submit New Results</a>
+                <a href="https://github.com/CVC-DAG/anyscript" target="_blank" class="nav-link">Documentation</a>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- Main Content -->
+    <main>
+        <!-- Success Message -->
+        <section class="section">
+            <div class="container">
+                <div class="success">
+                    <strong>Submission Processed Successfully</strong>
+                    <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                        Your submission has been evaluated and saved. Results are shown below.
+                    </p>
+                </div>
+
+
+                <!-- Submission Details -->
+                <div class="info-section">
+                    <h2>Submission Details</h2>
+                    <div class="info-row">
+                        <div class="info-label">Submission ID:</div>
+                        <div class="info-value"><code>{{ results.submission_id }}</code></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Team Name:</div>
+                        <div class="info-value">{{ results.team_name }}</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Email:</div>
+                        <div class="info-value">{{ results.email }}</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Timestamp:</div>
+                        <div class="info-value">{{ results.timestamp }}</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Tracks Submitted:</div>
+                        <div class="info-value">
+                            {% if results.tracks.books and results.tracks.pages %}
+                                Both Tracks (Book-Level + Page-Level)
+                            {% elif results.tracks.books %}
+                                Book-Level Evaluation
+                            {% elif results.tracks.pages %}
+                                Page-Level Evaluation
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Results Section -->
+        {% if results.tracks %}
+        <section class="section alt-bg">
+            <div class="container">
+                <h2>Evaluation Results</h2>
+                <p style="margin-bottom: 2rem;">
+                    Your submission has been evaluated using three complementary metrics: 
+                    Mean Average Precision (MAP@10), Recall@10, and Normalized Discounted Cumulative Gain (nDCG@10).
+                </p>
+
+
+                {% if results.tracks.books %}
+                <div class="track-results">
+                    <h3>Book-Level Evaluation Results</h3>
+                    <p style="color: #666; margin-bottom: 1rem;">
+                        Performance on identifying which books query pages belong to
+                    </p>
+                    <table class="metrics-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Score</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>MAP@10</strong></td>
+                                <td class="metric-value">{{ "%.4f"|format(results.tracks.books['map@10']) }}</td>
+                                <td>Mean Average Precision at top 10 results</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recall@10</strong></td>
+                                <td class="metric-value">{{ "%.4f"|format(results.tracks.books['recall@10']) }}</td>
+                                <td>Proportion of relevant pages retrieved</td>
+                            </tr>
+                            <tr>
+                                <td><strong>nDCG@10</strong></td>
+                                <td class="metric-value">{{ "%.4f"|format(results.tracks.books['ndcg@10']) }}</td>
+                                <td>Temporally-weighted ranking quality</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+
+
+                {% if results.tracks.pages %}
+                <div class="track-results" style="margin-top: 2rem;">
+                    <h3>Page-Level Evaluation Results</h3>
+                    <p style="color: #666; margin-bottom: 1rem;">
+                        Performance on identifying books by the same author across temporal spans
+                    </p>
+                    <table class="metrics-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Score</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>MAP@10</strong></td>
+                                <td class="metric-value">{{ "%.4f"|format(results.tracks.pages['map@10']) }}</td>
+                                <td>Mean Average Precision at top 10 results</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recall@10</strong></td>
+                                <td class="metric-value">{{ "%.4f"|format(results.tracks.pages['recall@10']) }}</td>
+                                <td>Proportion of relevant books retrieved</td>
+                            </tr>
+                            <tr>
+                                <td><strong>nDCG@10</strong></td>
+                                <td class="metric-value">{{ "%.4f"|format(results.tracks.pages['ndcg@10']) }}</td>
+                                <td>Temporally-weighted ranking quality</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+
+
+                <div class="info" style="margin-top: 2rem;">
+                    <strong>Understanding Your Results:</strong>
+                    <ul>
+                        <li><strong>MAP@10:</strong> Higher is better. Perfect score is 1.0</li>
+                        <li><strong>Recall@10:</strong> Measures coverage of relevant documents. Higher is better</li>
+                        <li><strong>nDCG@10:</strong> Rewards retrieving temporally closer manuscripts. Perfect score is 1.0</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+
+        <!-- Next Steps -->
+        <section class="section">
+            <div class="container">
+                <h2>Next Steps</h2>
+                <p>
+                    Your submission has been recorded with ID <code>{{ results.submission_id }}</code>. 
+                    You may submit additional improved results at any time - your latest submission will be used 
+                    for the final competition ranking.
+                </p>
+                
+                <div style="margin-top: 2rem; text-align: center;">
+                    <a href="/" class="back-button">Submit Another Result</a>
+                    <a href="https://github.com/CVC-DAG/anyscript" target="_blank" class="back-button" 
+                       style="background-color: var(--secondary-color); margin-left: 1rem;">
+                        View Documentation
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Computer Vision Center, Universitat Autònoma de Barcelona. All rights reserved.</p>
+            <p>ICDAR 2026 Competition on Long-Term Handwriting Author Identification</p>
+        </div>
+    </footer>
+</body>
+</html>

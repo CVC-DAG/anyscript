@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICDAR 2026 AnyScript - Submit Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Fixed Navigation Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>ICDAR 2026</h1>
+                <span>AnyScript Challenge</span>
+            </div>
+            <nav class="nav">
+                <a href="#submission" class="nav-link">Submit Results</a>
+                <a href="#format" class="nav-link">Format</a>
+                <a href="https://github.com/CVC-DAG/anyscript" target="_blank" class="nav-link">Documentation</a>
+            </nav>
+        </div>
+    </header>
+
+
+
+    <!-- Main Content -->
+    <main>
+        <!-- Submission Section -->
+        <section id="submission" class="section">
+            <div class="container">
+                <h2>Submission Portal</h2>
+                
+                <div class="info">
+                    <strong>Before submitting:</strong>
+                    <ul>
+                        <li>Fill in your team name and email address (required)</li>
+                        <li>Upload CSV file(s) for one or both evaluation tracks</li>
+                        <li>CSV must contain exactly 3 columns: <code>query_image</code>, <code>retrieved_image</code>, <code>similarity</code></li>
+                        <li>You may participate in one track or both tracks</li>
+                        <li>Multiple submissions are allowed - latest submission will be used</li>
+                    </ul>
+                </div>
+                <br><br>
+                
+
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+
+                <form action="/submit" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="team_name">Team Name <span class="required">*</span></label>
+                        <input  type="text" id="team_name" name="team_name" required 
+                               placeholder="Enter your team name">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="email">Contact Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required 
+                               placeholder="your.email@example.com">
+                    </div>
+
+
+                    <div class="track-section">
+                        <h3>Book-Level Evaluation</h3>
+                        <p style="margin-bottom: 1rem; color: #666;">
+                            Upload book-to-page similarity (p.ex. 0000224191,0000138891_70.png,0.8742)
+                        </p>
+                        <div class="form-group">
+                            <label for="books_csv">Upload Book CSV (Optional)</label>
+                            <input class="btn"  type="file" id="books_csv" name="books_csv" accept=".csv">
+                            <div class="format-info">
+                                Required format: query_image, retrieved_image, similarity
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="track-section">
+                        <h3>Page-Level Evaluation</h3>
+                        <p style="margin-bottom: 1rem; color: #666;">
+                            Upload page-to-page similarity scores (p.ex. 0000138863_357.png,0000084307_168.png,0.9991)
+                        </p>
+                        <div class="form-group">
+                            <label for="pages_csv">Upload Pages CSV (Optional)</label>
+                            <input class="btn" type="file" id="pages_csv" name="pages_csv" accept=".csv">
+                            <div class="format-info">
+                                Required format: query_image, retrieved_image, similarity
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <button class="btn" type="submit">Submit Results</button>
+                </form>
+            </div>
+        </section>
+
+
+        <!-- Format Information Section -->
+        <section id="format" class="section alt-bg">
+            <div class="container">
+                <h2>CSV Format Requirements</h2>
+                <p>Your submission CSV must follow this exact structure:</p>
+                
+                <div class="track-section">
+                    <h3>Required Columns</h3>
+                    <table class="metrics-table">
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Data Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>query_image</code></td>
+                                <td>String</td>
+                                <td>Query document identifier (page or book ID)</td>
+                            </tr>
+                            <tr>
+                                <td><code>retrieved_image</code></td>
+                                <td>String</td>
+                                <td>Retrieved document identifier from training set</td>
+                            </tr>
+                            <tr>
+                                <td><code>similarity</code></td>
+                                <td>Float</td>
+                                <td>Similarity score (typically between 0 and 1)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="track-section">
+                    <h3>Example CSV Structure</h3>
+                    <pre><code>query_image,retrieved_image,similarity
+query_page_001,train_page_1234,0.892
+query_page_001,train_page_5678,0.763
+query_page_002,train_page_3456,0.915</code></pre>
+                </div>
+
+
+                <div class="info">
+                    <strong>Important Notes:</strong>
+                    <ul>
+                        <li>CSV must contain <strong>exactly 3 columns</strong> - no more, no less</li>
+                        <li>Column order must match: query_image, retrieved_image, similarity</li>
+                        <li>No extra columns will be accepted</li>
+                        <li>File size limit: 16MB maximum</li>
+                        <li>Similarity scores should typically range between -1 and 1</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Computer Vision Center, Universitat Autònoma de Barcelona. All rights reserved.</p>
+            <p>ICDAR 2026 Competition on Long-Term Handwriting Author Identification</p>
+        </div>
+    </footer>
+</body>
+</html>
