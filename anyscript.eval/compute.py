@@ -48,14 +48,14 @@ for auth, list_books in lut_aut.items():
         book_id_pages[book.strip()] = list_pages
 
 # A queries map és on va lo de les LUT de pagines o de books en cas de que la response sigui amb les queries originals
-map_at_k, recall_at_k = compute_map_recall_at_k(df_books, k=10, queries_map=None, evaluate_page=False, book_to_author_map=book_id_to_author, book_to_pages_map=book_id_pages)
+map_at_k, recall_at_k = compute_map_recall_at_k(df_books, k=50, queries_map=None, evaluate_page=False, book_to_author_map=book_id_to_author, book_to_pages_map=book_id_pages)
 
 print(' THe mean recall at k book level is: ', recall_at_k)
 print(' THe mean map at k book level is: ', map_at_k)
 
 
 # A queries map és on va lo de les LUT de pagines o de books en cas de que la response sigui amb les queries originals
-map_at_k, recall_at_k = compute_map_recall_at_k(df_pages, k=10, queries_map=None, evaluate_page=True, book_to_author_map=book_id_to_author, book_to_pages_map=book_id_pages)
+map_at_k, recall_at_k = compute_map_recall_at_k(df_pages, k=50, queries_map=None, evaluate_page=True, book_to_author_map=book_id_to_author, book_to_pages_map=book_id_pages)
 
 print(' THe mean recall at k page level is: ', recall_at_k)
 print(' THe mean map at k page level is: ', map_at_k)
@@ -68,10 +68,10 @@ print('Starting to compute NDCG....')
 ideal_rankings = load_json(IDEAL_RANKNGS)
 ideal_rankings_books = load_json(IDEAL_RANKNGS_BOOKS)
 
-ndcg_at_k = compute_nDCG(df_pages, ideal_rankings, k=10, book_to_author=book_id_to_author, lut_full_catalog=lut_full_catalog, queries_map=lut_pages)
+ndcg_at_k = compute_nDCG(df_pages, ideal_rankings, k=50, book_to_author=book_id_to_author, lut_full_catalog=lut_full_catalog, queries_map=lut_pages)
 
 print(' THe mean nDCG at k page level is: ', ndcg_at_k)
 
-ndcg_at_k = compute_nDCG(df_books, ideal_rankings_books, k=10, book_to_author=book_id_to_author, lut_full_catalog=lut_full_catalog, queries_map=lut_books)
+ndcg_at_k = compute_nDCG(df_books, ideal_rankings_books, k=50, book_to_author=book_id_to_author, lut_full_catalog=lut_full_catalog, queries_map=lut_books)
 
 print(' THe mean nDCG at k book level is: ', ndcg_at_k)
