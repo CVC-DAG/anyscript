@@ -69,13 +69,10 @@ def get_book_id_from_filename(filename):
     return filename.split('_')[0]
 
 
-def retrieve_page_true_relevant_documents(query_filename:str):
+def retrieve_page_true_relevant_documents(query_filename:str, book_to_pages_map:dict):
     book_id = get_book_id_from_filename(query_filename)
-    path = Path(f"/data/123-1/datasets/AnyScriptFiltered/binarized/{book_id}")
-    relevant_documents = (path.glob("*.png"))
-
-    return list(relevant_documents)
-
+    relevant_pages = book_to_pages_map[book_id]
+    return relevant_pages
 
 def retrieve_book_true_relevant_documents(query_filename:str, book_to_author_map:dict, book_to_pages_map:dict):
     book_id = get_book_id_from_filename(query_filename)
@@ -101,12 +98,12 @@ def compute_map_recall_at_k(response: pd.DataFrame, k:int=100, queries_map=None,
 
         ## Extract relevant Documents
         if evaluate_page:
-            relevant_documents = retrieve_page_true_relevant_documents(query_img)
+            relevant_documents = retrieve_page_true_relevant_documents(query_img, book_to_pages_map)
         else:
             assert book_to_author_map is not None, "book_to_author_map must be provided for book-level evaluation"
             relevant_documents = retrieve_book_true_relevant_documents(query_img, book_to_author_map, book_to_pages_map)
 
-        num_relevant_documents = len(relevant_documents)+1
+        num_relevant_documents = len(relevant_documents)
 
         # SORT and FILTER predictions based in K
         filtered_response_sorted = filtered_response.sort_values("similarity", ascending=False).head(k)
@@ -137,7 +134,7 @@ def compute_relevance_gt(query_page,
         date_query = int(lut_full_catalog[query_book]["date"][0])
         date_candidate = int(lut_full_catalog[candidate_book]["date"][0])
 
-        epoch_score = max(0.0, 20 - abs(date_query - date_candidate) / 20)
+        epoch_score = max(0.0, (20 - abs(date_query - date_candidate)) / 20)
     except:
         epoch_score = 0
 
